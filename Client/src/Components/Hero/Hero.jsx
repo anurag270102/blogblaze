@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 const Hero = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const images = [
@@ -27,12 +28,12 @@ const Hero = () => {
                                 Ultimate Source for Insightful Blogging
                             </h1>
                             <div className="flex gap-2">
-                                <a href="#" className="bg-[#FFB340] hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md">Get
+                                <Link to={'/'} className="bg-[#FFB340] hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md">Get
                                     Started
-                                </a>
-                                <a href="#" className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-md">Learn
+                                </Link>
+                                <Link to={'/'} className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-md">Learn
                                     More
-                                </a>
+                                </Link>
                             </div>
                         </div>
                         <div className="md:w-1/2 lg:w-1/3 mt-8 md:mt-0">
