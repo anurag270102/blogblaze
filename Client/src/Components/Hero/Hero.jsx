@@ -28,7 +28,7 @@ const Hero = () => {
                                 Ultimate Source for Insightful Blogging
                             </h1>
                             <div className="flex gap-2">
-                                <Link to={'/'} className="bg-[#FFB340] hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md">Get
+                                <Link to={'/register'} className="bg-[#FFB340] hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md">Get
                                     Started
                                 </Link>
                                 <Link to={'/'} className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-md">Learn

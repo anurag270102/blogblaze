@@ -36,7 +36,7 @@ const Navbar = () => {
 
                     {/* content */}
                     <div className=" list-none flex items-center gap-10 font-medium">
-                        <Link to={'/post'} className="text-[22px] font-normal font-sans">Post</Link>
+                        <Link to={'/blog'} className="text-[22px] font-normal font-sans">Blog</Link>
                         <Link to={'/article'} className="text-[22px] font-normal font-sans">Article</Link>
                         <Link to={'/contact'} className="text-[22px] font-normal font-sans">Contact</Link>
                         <Link to={'/videos'} className="text-[22px] font-normal font-sans"></Link>
@@ -67,7 +67,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-5">
                     {/* buttons */}
                     <div className="flex gap-8">
-                        <Link to={'login'}>
+                        <Link to={'/login'}>
                             <button
                                 type="button"
                                 data-twe-ripple-init
@@ -91,13 +91,13 @@ const Navbar = () => {
                 <div id="dropdown" className="z-10  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute right-3">
                     <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                         <li>
-                            <Link to={'Profile'} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</Link>
+                            <Link to={'/myprofile/123'} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</Link>
                         </li>
                         <li>
                             <Link to={'setting'} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</Link>
                         </li>
                         <li>
-                            <Link to={'mypost'} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">My Post</Link>
+                            <Link to={'/addblog'} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Add Blog</Link>
                         </li>
                         <li>
                             <Link to={'logout'} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</Link>

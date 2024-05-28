@@ -10,6 +10,11 @@ import Home from './pages/Home/Home.jsx'
 import Article from './Components/Article/Article.jsx';
 import Onearticale from './Components/OneArticle/Onearticle.jsx';
 import ContactUs from './pages/Contact/ContactUS.jsx';
+import Myprofile from './Components/Myprofile/Myprofile.jsx';
+import Login from './pages/LoginPage/Loginpage.jsx';
+import Registerpage from './pages/RegisterPage/RegisterPage.jsx';
+import Blog from './pages/Blog/Blog.jsx';
+import Addblogpage from './pages/Addblogpage/Addblogpage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -17,8 +22,20 @@ const router = createBrowserRouter([
     element: <Home></Home>,
   },
   {
-    path:'/post',
+    path:'/register',
+    element:<Registerpage></Registerpage>
+  },
+  {
+    path:'/blog',
     element:<Allpost></Allpost>
+  },
+  {
+    path:'/blog/blogId',
+    element:<Blog></Blog>
+  },
+  {
+    path:'/addblog',
+    element:<Addblogpage></Addblogpage>
   },
   {
     path:'/contact',
@@ -35,6 +52,14 @@ const router = createBrowserRouter([
   {
     path: "article/:articleId",
     element: <Onearticale></Onearticale>,
+  },
+  {
+    path: "myprofile/:id",
+    element: <Myprofile></Myprofile>,
+  },
+  {
+    path: "/login",
+    element: <Login></Login>,
   },
 ]);
 
