@@ -1,6 +1,32 @@
-import { Link } from 'react-router-dom';
-
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 const ContactUs = () => {
+  const [form, setform] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [Success, setsuccess] = useState(false);
+  const navigate=useNavigate();
+  const handleChange = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setform({
+      ...form,
+      [name]: value,
+    })
+  }
+  const handleSubmit = async () => {
+    try {
+      const res = await axios.post('http://localhost:5000/contact', form);
+      if (res.status === 201) setsuccess(true);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
   return (
     <section className="body-font  bg-[#031000] text-gray-400">
       <div className="container mx-auto px-5 py-12">
@@ -22,6 +48,7 @@ const ContactUs = () => {
                   name="name"
                   className="peer w-full rounded border border-gray-700 bg-[#031000] bg-opacity-40 py-1 px-3 text-base leading-8  placeholder-transparent outline-none transition-colors duration-200 ease-in-out focus:border-[#FFB340] focus:bg-gray-900 focus:ring-2 focus:ring-[#FFB340]"
                   placeholder="Name"
+                  onChange={handleChange}
                 />
                 <label
                   htmlFor="name"
@@ -39,6 +66,7 @@ const ContactUs = () => {
                   name="email"
                   className="peer w-full rounded border border-gray-700 bg-[#031000] bg-opacity-40 py-1 px-3 text-base leading-8 placeholder-transparent outline-none transition-colors duration-200 ease-in-out focus:border-[#FFB340] focus:bg-gray-900 focus:ring-2 focus:ring-[#FFB340]"
                   placeholder="Email"
+                  onChange={handleChange}
                 />
                 <label
                   htmlFor="email"
@@ -55,6 +83,7 @@ const ContactUs = () => {
                   name="message"
                   className="peer h-32 w-full resize-none rounded border border-gray-700 bg-[#031000] bg-opacity-40 py-1 px-3 text-base leading-6 placeholder-transparent outline-none transition-colors duration-200 ease-in-out focus:border-[#FFB340] focus:bg-gray-900 focus:ring-2 focus:ring-[#FFB340]"
                   placeholder="Message"
+                  onChange={handleChange}
                 ></textarea>
                 <label
                   htmlFor="message"
@@ -64,13 +93,33 @@ const ContactUs = () => {
                 </label>
               </div>
             </div>
+            {
+              Success &&
+                <div className="flex w-48 shadow-lg rounded-lg">
+                  <div className="bg-green-300 py-3 px-6 rounded-l-lg flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="text-[#FFB340] fill-current" viewBox="0 0 16 16" width="20" height="20">
+                      <path fillRule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path>
+                    </svg>
+                  </div>
+                  <div className="px-4 py-3 bg-green-200 text-[#FFB340] rounded-r-lg flex justify-between items-center w-full border border-l-transparent ">
+                    <div>Success</div>
+                    <button  >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="fill-current text-gray-700" viewBox="0 0 16 16" width="20" height="20">
+                        <path fillRule="evenodd" d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z">
+                        </path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+            }
             <div className="w-full p-2">
-              <Link to={'/'}>
+              <Link>
                 <button
                   type="button"
                   data-twe-ripple-init
                   data-twe-ripple-color="light"
                   className="inline-block rounded bg-[#FFB340] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[#FFB340] transition duration-150 ease-in-out hover:bg-[#FFB340] hover:shadow-[#FFB340] focus:bg-[#FFB340] focus:shadow-[#FFB340] focus:outline-none focus:ring-0 active:bg-[#FFB340] active:shadow-[#FFB340] motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                  onClick={handleSubmit}
                 >
                   Contact
                 </button>

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
+import Article from '../Article/Article';
 const Onearticle = () => {
     return (
         <>
@@ -94,115 +95,7 @@ const Onearticle = () => {
                 </div>
             </div>
             <div className="h-screen w-full dark:bg-gray-800">
-                <section className="flex flex-col justify-center max-w-7xl px-4 py-10 mx-auto sm:px-6">
-                    <h2 className="mb-6 text-2xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text  text-transparent md:text-3xl dark:text-white">
-                        More Articles
-                    </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-1">
-                        <div className="p-4 flex flex-col justify-between gap-2 border rounded-lg shadow-md bg-[#031000] dark:bg-gray-700 dark:border-gray-400/40">
-                            <Link className="text-xl font-semibold text-[#FFB340] hover:underline two-lines dark:text-blue-100" to={'/article/articleId'}>
-                                Football Legends Gerrard and Carragher Fall Prey to Fictitious Rap Song
-                            </Link>
-
-                            <div className="flex flex-wrap gap-2 text-xs text-gray-600 dark:text-gray-300">
-                                <span className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-600">
-                                    Entertainment
-                                </span>
-                                <span className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-600">
-                                    Sports
-                                </span>
-                                <span className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-600">
-                                    Crime
-                                </span>
-                            </div>
-
-                            <p className="text-gray-400 two-lines dark:text-gray-300">
-                                A disconcerting rap song about murder featuring fake voices of renowned footballers Steven Gerrard
-                                and
-                                Jamie
-                                Carragher, created by prisoner L20 Mazza, has become a sensation online.
-                            </p>
-
-                            <div className="flex items-center justify-between text-sm">
-                                <button className="text-gray-500 dark:text-gray-300">
-                                    2 min read
-                                </button>
-
-                                <Link to={'/article/articleId'} className="text-[#FFB340] hover:underline dark:text-white">
-                                    Read more
-                                </Link>
-                            </div>
-                        </div>
-                        <div className="p-4 flex flex-col justify-between gap-2 border rounded-lg shadow-md bg-[#031000] dark:bg-gray-700 dark:border-gray-400/40">
-                            <Link className="text-xl font-semibold text-[#FFB340] hover:underline two-lines dark:text-blue-100" to={'/article/articleId'}>
-                                How The Late Queen Elizabeth II Understood Meghan Markles Influence
-                            </Link>
-
-                            <div className="flex flex-wrap gap-2 text-xs text-gray-600 dark:text-gray-300">
-                                <span className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-600">
-                                    Entertainment
-                                </span>
-                                <span className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-600">
-                                    Lifestyle
-                                </span>
-                            </div>
-
-                            <p className="text-gray-400 two-lines dark:text-gray-300">
-                                The late Queen Elizabeth II saw potential in Meghan Markles presence in the Royal Family. She even
-                                offered
-                                Meghan the opportunity to continue her acting career while serving as a royal. Nevertheless, Meghan
-                                chose to
-                                dedicate herself to her royal duties.
-                            </p>
-
-                            <div className="flex items-center justify-between text-sm">
-                                <button className="text-gray-500 dark:text-gray-300">
-                                    2 min read
-                                </button>
-
-                                <Link to={'/article/articleId'} className="text-[#FFB340] hover:underline dark:text-white">
-                                    Read more
-                                </Link>
-                            </div>
-                        </div>
-                        <div className="p-4 flex flex-col justify-between gap-2 border rounded-lg shadow-md bg-[#031000] dark:bg-gray-700 dark:border-gray-400/40">
-                            <Link className="text-xl font-semibold text-[#FFB340] hover:underline two-lines dark:text-blue-100" to={'/article/articleId'}>
-                                Gaby Roslin Shares Rays of Hope in her New Book: Spread The Joy
-                            </Link>
-
-                            <div className="flex flex-wrap gap-2 text-xs text-gray-600 dark:text-gray-300">
-                                <span className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-600">
-                                    Entertainment
-                                </span>
-                                <span className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-600">
-                                    Lifestyle
-                                </span>
-                                <span className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-600">
-                                    Health
-                                </span>
-                            </div>
-
-                            <p className="text-gray-400 two-lines dark:text-gray-300">
-                                Renowned TV presenter Gaby Roslin is out to spread positivity and resilience through her upcoming
-                                book
-                                Spread
-                                the Joy, sharing her own journey through grief, success, and the belief in a positive outlook on
-                                life.
-                            </p>
-
-                            <div className="flex items-center justify-between text-sm">
-                                <button className="text-gray-500 dark:text-gray-300">
-                                    2 min read
-                                </button>
-
-                                <Link to={'/article/articleId'} className="text-[#FFB340] hover:underline dark:text-white">
-                                    Read more
-                                </Link>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </section>
+                <Article></Article>
             </div>
             <Footer></Footer>
         </>

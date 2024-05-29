@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from 'axios';
 import { Errormessage } from "../Errormessage/Errormessage";
-import setlocastorage from '../../Utils/SetLocalstorage';
 import { Vortex } from 'react-loader-spinner';
 
 const Register = () => {
@@ -69,8 +68,7 @@ const Register = () => {
                 profilepic: ProfileUrl,
                 coverpic:CoverUrl,
             });
-            setlocastorage(status.data.user._id, status.data.user);
-            if(status.status===201) navigate('/');
+            if(status.status===201) navigate('/login');
         } catch (error) {
             if (error.response) {
                 setErrormessage(error.response.data.message);

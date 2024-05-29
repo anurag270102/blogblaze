@@ -1,4 +1,41 @@
+import { useState } from "react"
+import axios from 'axios'
+import { Errormessage } from "../Errormessage/Errormessage";
+import setlocastorage from '../../Utils/SetLocalstorage';
+import { useNavigate } from "react-router-dom";
 const Login = () => {
+    const [form, setform] = useState({
+        email: '',
+        password: '',
+    });
+    const [errormessage, setErrormessage] = useState('');
+    const navigate = useNavigate();
+    const handlachange = (e) => {
+        e.preventDefault();
+        const { name, value } = e.target;
+        setform({
+            ...form,
+            [name]: value
+        })
+    }
+    const handlesubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.post('http://localhost:5000/login', form);
+            if (res.data.user.length == 0) {
+                setErrormessage('create account first');  
+            }
+            else {
+                setlocastorage('currentuser', res.data.user);
+                navigate('/');
+            }
+        } catch (error) {
+            console.log(error);
+            if (error.response) {
+                setErrormessage(error.response.data.message);
+            }
+        }
+    }
     return (
         <>
             {/* <!-- component --> */}
@@ -11,35 +48,35 @@ const Login = () => {
                         <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
                             <div className="text-center mb-10">
                                 <h1 className="font-bold text-3xl text-gray-900">Login</h1>
-                               
                             </div>
-                            <div>
-                                
-                                <div className="flex -mx-3">
+                            <div className="flex flex-col items-center justify-center">
+                                <div className="flex w-full mx-auto ">
                                     <div className="w-full px-3 mb-5">
-                                        <label htmlFor="" className="text-xs font-semibold px-1">Email</label>
+                                        <label htmlFor="" className="text-xs font-semibold ml-5">Email</label>
                                         <div className="flex">
-                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
-                                            <input type="email" className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-[#FFB340]" placeholder="johnsmith@example.com" />
+                                            <input type="email" name="email" className="w-full ml-5 pl-3 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-[#FFB340]" placeholder="Email ID" onChange={handlachange} />
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex -mx-3">
+                                <div className="flex w-full mx-auto ">
                                     <div className="w-full px-3 mb-12">
-                                        <label htmlFor="" className="text-xs font-semibold px-1">Password</label>
+                                        <label htmlFor="" className="text-xs font-semibold ml-5">Password</label>
                                         <div className="flex">
-                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                            <input type="password" className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-[#FFB340]" placeholder="************" />
+                                            <input type="password" name="password" className="w-full ml-5 pl-3 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-[#FFB340]" placeholder="Password" onChange={handlachange} />
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex -mx-3">
-                                    <div className="w-full px-3 mb-5">
-                                        <button className="block w-full max-w-xs mx-auto bg-[#FFB340] hover:bg-[#FFB340e5]  text-black rounded-lg px-3 py-3 font-semibold">LOGIN NOW</button>
+
+                                {errormessage && <Errormessage message={errormessage} />}
+
+                                <div className="flex  items-center justify-center">
+                                    <div className="w-full  mb-5">
+                                        <button className="block w-full max-w-xs mx-auto bg-[#FFB340] hover:bg-[#FFB340e5]  text-black rounded-lg px-6 py-3 font-semibold" onClick={handlesubmit}>LOGIN</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

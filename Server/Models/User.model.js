@@ -28,6 +28,10 @@ const userSchema=new Schema({
         type:String,
         require:true,
     },
+    coverpic:{
+        type:String,
+        require:true,
+    },
     instagramurl:{
         type:String,
         require:false,
