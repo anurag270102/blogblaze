@@ -2,23 +2,7 @@ const mongoose=require('mongoose');
 
 const {Schema}=mongoose;
 
-const BlogSchema=new Schema({
-    title:{
-        type:String,
-        require:true,
-    },
-    aboutblog: {
-        type:String,
-        require:true,
-    },
-    coverpic: {
-        type:String,
-        require:true,
-    },
-    categories: {
-        type:Array,
-        require:true,
-    },
+const CommentSchema=new Schema({
     profilepic:{
         type:String,
         require:true,
@@ -27,14 +11,20 @@ const BlogSchema=new Schema({
         type:String,
         require:true,
     },
-    userid:{
+    message:{
         type:String,
         require:true,
     },
-    
-
+    blogid:{
+        type:String,
+        require:true,
+    },
+    userid:{
+        type:String,
+        require:true,
+    }
 },{
     timestamps:true,
 })
 
-module.exports=mongoose.model('Blog',BlogSchema);
+module.exports=mongoose.model('Comments',CommentSchema);

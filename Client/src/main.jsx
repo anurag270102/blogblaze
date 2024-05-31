@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import Allpost from './Components/Allpost/Allpost.jsx'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -15,7 +14,8 @@ import Registerpage from './pages/RegisterPage/RegisterPage.jsx';
 import Blog from './pages/Blog/Blog.jsx';
 import Addblogpage from './pages/Addblogpage/Addblogpage.jsx';
 import Allarticle from './pages/Allarticle/Allarticle.jsx';
-
+import AddArticlePage from './pages/AddArticlePage/AddArticlePage.jsx';
+import Allpostpage from './pages/Allpostpage/Allpostpage.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,12 +26,12 @@ const router = createBrowserRouter([
     element:<Registerpage></Registerpage>
   },
   {
-    path:'/blog',
-    element:<Allpost></Allpost>
+    path:"/blog/:blogId",
+    element:<Blog></Blog>
   },
   {
-    path:'/blog/blogId',
-    element:<Blog></Blog>
+    path:'/blog',
+    element:<Allpostpage></Allpostpage>
   },
   {
     path:'/addblog',
@@ -41,12 +41,13 @@ const router = createBrowserRouter([
     path:'/contact',
     element:<ContactUs></ContactUs>
   },
+  
   {
-    path: "search/:search",
-    element: <Allpost></Allpost>,
+    path: "/addarticle",
+    element: <AddArticlePage></AddArticlePage>,
   },
   {
-    path: "article",
+    path: "/article",
     element: <Allarticle/>,
   },
   {

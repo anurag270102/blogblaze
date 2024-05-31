@@ -1,49 +1,66 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams } from "react-router-dom";
-import Navbar from '../Navbar/Navbar';
-import Footer from '../Footer/Footer';
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+import axios from 'axios';
+import { format, parseISO } from 'date-fns';
 
 const Allpost = () => {
-    const params = useParams();
+    const { search } = useLocation();
     const [posts, setPosts] = useState([]);
     const [visibleCount, setVisibleCount] = useState(6);
     const [loading, setLoading] = useState(false);
+    const [searchValue, setSearchValue] = useState('');
+    const navigator = useNavigate();
+    console.log(search);
 
     useEffect(() => {
         fetchPosts();
-    }, []);
+    }, [search]);
 
     const fetchPosts = async () => {
         setLoading(true);
-        
-        setTimeout(() => {
-            const allPosts = Array.from({ length: 15 }, (_, index) => ({
-                id: index + 1,
-                title: `In usu laoreet repudiare legendo`,
-                date: `January ${index + 1}, 2021`,
-                description: `Mei ex aliquid eleifend forensibus, quo ad dicta apeirian neglegentur, ex has tantas percipit perfecto. At per tempor albucius perfecto, ei probatus consulatu patrioque mea, ei vocent delicata indoctum pri.`,
-                imageUrl: "/src/assets/Colorful Modern Concept Free B Logo (1).png",
-            }));
-            setPosts(allPosts);
-            setLoading(false);
+        setTimeout(async () => {
+            try {
+                const allPosts = await axios.get(`http://localhost:5000/blog${search}`);
+                // console.log(allPosts.data.allblog);
+                setPosts(allPosts.data.allblog);
+                setLoading(false);
+            } catch (error) {
+                console.log(error);
+            }
         }, 1000);
     };
-
     const loadMorePosts = () => {
         setVisibleCount(prevCount => prevCount + 3);
     };
 
+    const formatDateTime = (dateTime) => {
+        const date = parseISO(dateTime);
+        return format(date, "do MMMM, h:mm ");
+    };
+
+    const getSearchItem = () => {
+        navigator(`?search=${searchValue}`)
+    }
+
+    const truncateText = (text, maxLength) => {
+        return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+    };
     return (
         <>
-            <Navbar />
+
             <div className="flex items-center justify-center mt-5">
                 <div className="flex w-[30%]">
                     <input
                         type="text"
                         className="block w-full px-4 py-2 rounded-l-md text-[#FFB340] bg-[#031000] border-[2px] border-black focus:border-[#FFB340] focus:border-[2px] focus:border-r-0 focus:outline-none"
                         placeholder="Explore World..."
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
                     />
-                    <button className="px-4 text-white rounded-r-md bg-[#FFB340] focus:border-[2px] focus:border-black">
+                    <button
+                        onClick={getSearchItem}
+                        className="px-4 text-white rounded-r-md bg-[#FFB340] focus:border-[2px] focus:border-black">
                         Search
                     </button>
                 </div>
@@ -57,7 +74,7 @@ const Allpost = () => {
                     {["Fashion", "Food", "Travel", "Blog", "Health", "Education", "C++", "Web Development", "Cloth", "India", "Cooking"].map(category => (
                         <Link
                             key={category}
-                            to={`/search/${category}`}
+                            to={`?search=${category}`}
                             className="px-3 py-1 rounded-[4px] hover:bg-gray-800 bg-[#031000] text-[#FFB340]"
                         >
                             {category}
@@ -66,9 +83,9 @@ const Allpost = () => {
                 </div>
             </div>
 
-            <h2 className="text-5xl px-52 py-3 font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent dark:text-white">
-                {params.search}
-            </h2>
+
+
+
 
             <section className="dark:bg-[#031000] dark:text-gray-800">
                 <div className="container max-w-6xl p-6 mx-auto space-y-6 sm:space-y-12">
@@ -79,23 +96,26 @@ const Allpost = () => {
                             <div className="grid justify-center grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                                 {posts.slice(0, visibleCount).map(post => (
                                     <Link
-                                        key={post.id}
+                                        key={post._doc._id}
                                         rel="noopener noreferrer"
-                                        to={`/blog/${post.id}`}
+                                        to={`/blog/${post._doc._id}`}
                                         className="max-w-sm mx-auto rounded-md group hover:no-underline focus:no-underline dark:bg-gray-50 bg-[#031000] text-gray-400 hover:shadow-lg"
                                     >
-                                        <img role="presentation" className="object-cover w-full rounded h-44 dark:bg-gray-500" src={post.imageUrl} alt="" />
+                                        <img role="presentation" className="object-cover w-full rounded h-44 dark:bg-gray-500" src={post._doc.coverpic} alt="" />
                                         <div className="p-6 space-y-2 ">
                                             <div className='flex gap-5'>
-                                                <img src={post.imageUrl} className=' w-10 rounded-full'></img>
-                                                <p>anurag</p>
+                                                <img src={post._doc.profilepic} className=' w-10 rounded-full'></img>
+                                                <div className='flex flex-col'>
+                                                    <p className='font-semibold text-xl'>{post._doc.firstname}</p>
+                                                    <span className="text-xs dark:text-gray-600">{formatDateTime(post.updatedAt)}</span>
+                                                </div>
                                             </div>
-                                            <h3 className="text-2xl font-semibold group-hover:underline group-focus:underline text-[#FFB340]">{post.title}</h3>
-                                            <span className="text-xs dark:text-gray-600">{post.date}</span>
-                                            <p className="text-gray-400">{post.description}</p>
+                                            <h3 className="text-2xl font-semibold group-hover:underline group-focus:underline text-[#FFB340]">{post._doc.title}</h3>
+                                            <p className="text-gray-400">{truncateText(post._doc.aboutblog, 100)}</p>
+
                                         </div>
                                     </Link>
-                                    
+
                                 ))}
                             </div>
                             {visibleCount < posts.length && (
@@ -109,7 +129,7 @@ const Allpost = () => {
                     )}
                 </div>
             </section>
-            <Footer />
+
         </>
     );
 };

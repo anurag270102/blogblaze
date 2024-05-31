@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -10,13 +10,13 @@ const Navbar = () => {
     const navigator = useNavigate();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [data, setData] = useState(null);
+    const {pathname}=useLocation();
     useEffect(() => {
         const user = localStorage.getItem('currentuser');
         if (user) {
             setIsAuthenticated(true);
             setData(JSON.parse(user));
-        }
-        
+        }    
     }, []);
 
     // const { pathname } = useLocation();
@@ -31,8 +31,8 @@ const Navbar = () => {
     }, []);
     
     const getSearchItem = () => {
-        navigator(`/search/${searchValue}`);
-        setSearchValue(' ');
+        navigator(`/blog?search=${searchValue}`);
+        setSearchValue('');
     }
 
     const handleLogout = () => {
@@ -58,6 +58,7 @@ const Navbar = () => {
                     </div>
                 </div>
                 {/* searchbar */}
+                {pathname==='/'?
                 <div className="flex items-center">
                     <div className='max-w-[10/12] mx-auto'>
                         <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg  overflow-hidden">
@@ -77,14 +78,14 @@ const Navbar = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>:<></>}
                 {/* right */}
                 <div className="flex items-center gap-5">
                     {/* buttons */}
                     {isAuthenticated ? <div>
                         <img
                             src= {isAuthenticated?data[0].profilepic:"https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"}
-                            className="w-12 rounded-full object-fill shadow-lg cursor-pointer transition-all duration-100 ease-in-out"
+                            className="mt-2 rounded-full w-12 h-12 "
                             alt="Avatar"
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                         />
@@ -107,13 +108,14 @@ const Navbar = () => {
                 <div id="dropdown" className="z-10  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute right-3">
                     <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                         <li>
-                            <Link to={`/myprofile/123`} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</Link>
+                            <Link to={`/myprofile/${data[0]._id}`} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</Link>
                         </li>
-                        <li>
-                            <Link to={'setting'} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</Link>
-                        </li>
+                        
                         <li>
                             <Link to={'/addblog'} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Add Blog</Link>
+                        </li>
+                        <li>
+                            <Link to={'/addarticle'} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Add Article</Link>
                         </li>
                         <li>
                             <Link className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" onClick={handleLogout}>Logout</Link>

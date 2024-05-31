@@ -1,35 +1,36 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams } from "react-router-dom";
-
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import axios from 'axios';
 
 const Article = () => {
+    const {search}=useLocation();
     const params = useParams();
     const [articles, setArticles] = useState([]);
     const [visibleCount, setVisibleCount] = useState(3);
     const [loading, setLoading] = useState(false);
-
+    const [searchValue, setSearchValue] = useState('');
+    const navigator=useNavigate();
     useEffect(() => {
         // Fetch initial articles
         fetchArticles();
-    }, []);
+    }, [search]);
 
     const fetchArticles = async () => {
         setLoading(true);
         // Mock API call
-        setTimeout(() => {
-            const allArticles = Array.from({ length: 9 }, (_, index) => ({
-                id: index + 1,
-                title: `Article ${index + 1}`,
-                content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vel sapien et massa dapibus semper...`,
-            }));
-            setArticles(allArticles);
+        setTimeout(async() => {
+            const allArticles = await axios.get(`http://localhost:5000/article${search}`); 
+            setArticles(allArticles.data.articles);
             setLoading(false);
         }, 1000);
     };
-
     const loadMoreArticles = () => {
         setVisibleCount(prevCount => prevCount + 3);
     };
+
+    const getSearchItem = () => { 
+        navigator(`?search=${searchValue}`)
+    }
 
     return (
         <>
@@ -40,8 +41,12 @@ const Article = () => {
                         type="text"
                         className="block w-full px-4 py-2 rounded-l-md text-[#FFB340] bg-[#031000] border-[2px] border-black focus:border-[#FFB340] focus:border-[2px] focus:border-r-0 focus:outline-none"
                         placeholder="Explore World..."
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
                     />
-                    <button className="px-4 text-white rounded-r-md bg-[#FFB340] focus:border-[2px] focus:border-black">
+                    <button 
+                    onClick={getSearchItem}
+                    className="px-4 text-white rounded-r-md bg-[#FFB340] focus:border-[2px] focus:border-black">
                         Search
                     </button>
                 </div>
@@ -55,7 +60,7 @@ const Article = () => {
                     {["Fashion", "Food", "Travel", "Blog", "Health", "Education", "C++", "Web Development", "Cloth", "India", "Cooking"].map(category => (
                         <Link
                             key={category}
-                            to={`/search/${category}`}
+                            to={`?search=${category}`}
                             className="px-3 py-1 rounded-[4px] hover:bg-gray-800 bg-[#031000] text-[#FFB340]"
                         >
                             {category}
@@ -77,7 +82,7 @@ const Article = () => {
                             <div key={article.id} className="bg-[#031000] text-gray-300 p-10 rounded-md mb-10">
                                 <h1 className="font-bold text-2xl mb-2">{article.title}</h1>
                                 <p className="my-7">{article.content}</p>
-                                <Link to={`/article/${article.id}`} className="bg-[#FFB340] hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md">
+                                <Link to={`/article/${article._id}`} className="bg-[#FFB340] hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md">
                                     Read More...
                                 </Link>
                             </div>

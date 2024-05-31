@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 const Cta = () => {
     return (
         <>
-            <div className="relative mt-1 max-w-5xl ">
-                <div className=" p-1 w-[1519px] bg-[#031000]">
+            <div className="relative mt-1  ">
+                <div className=" p-1 w-[100%] bg-[#031000]">
                     <div className="rounded-lg bg-black/80 backdrop-blur">
                         <div className="flex w-full flex-wrap items-center justify-center  gap-20 px-8 py-10 sm:px-16 lg:flex-nowrap">
                             <div className="lg:max-w-xl">
@@ -17,11 +17,8 @@ const Cta = () => {
                                 </p>
                             </div>
                             <div className="flex flex-wrap items-center justify-center gap-6 ">
-                                <Link to={'/'} className="bg-[#FFB340] hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md">Get
+                                <Link to={'/register'} className="bg-[#FFB340] hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md">Get
                                     Started
-                                </Link>
-                                <Link to={'/'} className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-md">Learn
-                                    More
                                 </Link>
                             </div>
                         </div>

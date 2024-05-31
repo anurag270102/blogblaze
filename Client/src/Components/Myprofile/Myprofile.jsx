@@ -1,12 +1,16 @@
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { format, parseISO } from 'date-fns';
 
 const Myprofile = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [data, setData] = useState(null);
-    const navigate=useNavigate();
+    const [userpost, setuserpost] = useState([]);
+    const [getComments, setGetComments] = useState([]);
+    const navigate = useNavigate();
     useEffect(() => {
         const user = localStorage.getItem('currentuser');
         if (user) {
@@ -14,10 +18,42 @@ const Myprofile = () => {
             setData(JSON.parse(user));
         }
     }, []);
-    console.log(data);
+    const { id } = useParams();
+    const fetchblogOfUser = async () => {
+        try {
+            const res = await axios.get(`http://localhost:5000/myprofile/${id}`)
+            // console.log(res);
+            setuserpost(res.data.allblog)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const fetchCommentOfUser = async () => {
+        try {
+            const res = await axios.get(`http://localhost:5000/mycomment/${id}`)
+            setGetComments(res.data.comments);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        fetchblogOfUser();
+        fetchCommentOfUser();
+    }, []);
+
+    // console.log(data);
     if (!data) {
         return <div>Loading...</div>; // Add a loading state
     }
+    const formatDateTime = (dateTime) => {
+        const date = parseISO(dateTime);
+        return format(date, "do MMMM, h:mm ");
+    };
+
+    const truncateText = (text, maxLength) => {
+        return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+    };
+
     return (
         <>
             <Navbar />
@@ -86,54 +122,44 @@ const Myprofile = () => {
                 </div>
                 <div className='flex w-full justify-between px-52'>
                     <h1 className="text-3xl py-2 font-bold  items-center flex justify-start bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-sm ">Post</h1>
-                    <button className="block  bg-[#FFB340] hover:bg-[#FFB340e5]  text-black rounded-lg px-6 py-3 font-semibold" onClick={()=>navigate('/addblog')}>Add Blog</button>
+                    <button className="block  bg-[#FFB340] hover:bg-[#FFB340e5]  text-black rounded-lg px-6 py-3 font-semibold" onClick={() => navigate('/addblog')}>Add Blog</button>
 
                 </div>
                 <div className="container max-w-6xl p-6 mx-auto space-y-6 sm:space-y-12">
 
                     <div className="grid justify-center grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
-                        <Link rel="noopener noreferrer" to={'/blog/blodId'} className="max-w-sm mx-auto  rounded-md group hover:no-underline focus:no-underline dark:bg-gray-50 bg-[#031000] text-gray-400 hover:shadow-lg">
-                            <img role="presentation" className="object-cover w-full rounded h-44 dark:bg-gray-500" src="/src/assets/Colorful Modern Concept Free B Logo (1).png" loading='lazy' />
-                            <div className="p-6 space-y-2">
-                                <h3 className="text-2xl font-semibold group-hover:underline group-focus:underline text-[#FFB340]">In usu laoreet repudiare legendos</h3>
-                                <span className="text-xs dark:text-gray-600">January 21, 2021</span>
-                                <p className="text-gray-400">Mei ex aliquid eleifend forensibus, quo ad dicta apeirian neglegentur, ex has tantas percipit perfecto. At per tempor albucius perfecto, ei probatus consulatu patrioque mea, ei vocent delicata indoctum pri.</p>
-                            </div>
-                        </Link>
-                        <Link rel="noopener noreferrer" to={'/blog/blodId'} className="max-w-sm mx-auto  rounded-md group hover:no-underline focus:no-underline dark:bg-gray-50 bg-[#031000] text-gray-400 hover:shadow-lg">
-                            <img role="presentation" className="object-cover w-full rounded h-44 dark:bg-gray-500" src="/src/assets/Colorful Modern Concept Free B Logo (1).png" loading='lazy' />
-                            <div className="p-6 space-y-2">
-                                <h3 className="text-2xl font-semibold group-hover:underline group-focus:underline text-[#FFB340]">In usu laoreet repudiare legendos</h3>
-                                <span className="text-xs dark:text-gray-600">January 21, 2021</span>
-                                <p className="text-gray-400">Mei ex aliquid eleifend forensibus, quo ad dicta apeirian neglegentur, ex has tantas percipit perfecto. At per tempor albucius perfecto, ei probatus consulatu patrioque mea, ei vocent delicata indoctum pri.</p>
-                            </div>
-                        </Link>
-                        <Link rel="noopener noreferrer" to={'/blog/blodId'} className="max-w-sm mx-auto  rounded-md group hover:no-underline focus:no-underline dark:bg-gray-50 bg-[#031000] text-gray-400 hover:shadow-lg">
-                            <img role="presentation" className="object-cover w-full rounded h-44 dark:bg-gray-500" src="/src/assets/Colorful Modern Concept Free B Logo (1).png" loading='lazy' />
-                            <div className="p-6 space-y-2">
-                                <h3 className="text-2xl font-semibold group-hover:underline group-focus:underline text-[#FFB340]">In usu laoreet repudiare legendos</h3>
-                                <span className="text-xs dark:text-gray-600">January 21, 2021</span>
-                                <p className="text-gray-400">Mei ex aliquid eleifend forensibus, quo ad dicta apeirian neglegentur, ex has tantas percipit perfecto. At per tempor albucius perfecto, ei probatus consulatu patrioque mea, ei vocent delicata indoctum pri.</p>
-                            </div>
-                        </Link>
-                        <Link rel="noopener noreferrer" to={'/blog/blodId'} className="max-w-sm mx-auto  rounded-md group hover:no-underline focus:no-underline dark:bg-gray-50 bg-[#031000] text-gray-400 hover:shadow-lg">
-                            <img role="presentation" className="object-cover w-full rounded h-44 dark:bg-gray-500" src="/src/assets/Colorful Modern Concept Free B Logo (1).png" loading='lazy' />
-                            <div className="p-6 space-y-2">
-                                <h3 className="text-2xl font-semibold group-hover:underline group-focus:underline text-[#FFB340]">In usu laoreet repudiare legendos</h3>
-                                <span className="text-xs dark:text-gray-600">January 21, 2021</span>
-                                <p className="text-gray-400">Mei ex aliquid eleifend forensibus, quo ad dicta apeirian neglegentur, ex has tantas percipit perfecto. At per tempor albucius perfecto, ei probatus consulatu patrioque mea, ei vocent delicata indoctum pri.</p>
-                            </div>
-                        </Link>
-                        <Link rel="noopener noreferrer" to={'/blog/blodId'} className="max-w-sm mx-auto  rounded-md group hover:no-underline focus:no-underline dark:bg-gray-50 bg-[#031000] text-gray-400 hover:shadow-lg">
-                            <img role="presentation" className="object-cover w-full rounded h-44 dark:bg-gray-500" src="/src/assets/Colorful Modern Concept Free B Logo (1).png" loading='lazy' />
-                            <div className="p-6 space-y-2">
-                                <h3 className="text-2xl font-semibold group-hover:underline group-focus:underline text-[#FFB340]">In usu laoreet repudiare legendos</h3>
-                                <span className="text-xs dark:text-gray-600">January 21, 2021</span>
-                                <p className="text-gray-400">Mei ex aliquid eleifend forensibus, quo ad dicta apeirian neglegentur, ex has tantas percipit perfecto. At per tempor albucius perfecto, ei probatus consulatu patrioque mea, ei vocent delicata indoctum pri.</p>
-                            </div>
-                        </Link>
+                        {
+                            userpost.map((post) => {
+                                return <Link rel="noopener noreferrer" to={`/blog/${post._doc._id}`} className="max-w-sm mx-auto  rounded-md group hover:no-underline focus:no-underline dark:bg-gray-50 bg-[#031000] text-gray-400 hover:shadow-lg" key={post._doc_id}>
+                                    <img role="presentation" className="object-cover w-full rounded h-44 dark:bg-gray-500" src={post._doc.coverpic} loading='lazy' />
+                                    <div className="p-6 space-y-2">
+                                        <h3 className="text-2xl font-semibold group-hover:underline group-focus:underline text-[#FFB340]">{post._doc.title}</h3>
+                                        <span className="text-xs dark:text-gray-600">{formatDateTime(post.createdAt)}</span>
+                                        <p className="text-gray-400">{truncateText(post._doc.aboutblog,100)}</p>
+                                    </div>
+                                </Link>
+                            })
+                        }
                     </div>
+                </div>
+                <h1 className="text-3xl py-2 pl-52 font-bold  items-center flex justify-start bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-sm ">My Comments</h1>
+                <div className='flex justify-cetnter items-center  gap-10 my-10 flex-wrap px-52 ' >
+                    {getComments.map((comment, index) => (
+                        <div className="flex  shadow-md" key={index}>
+                            <div className="flex-shrink-0 p-2 mr-3">
+                                <img className="mt-2 rounded-full  w-8 h-8 sm:w-10 sm:h-10" src={comment.profilepic} alt="" />
+                            </div>
+                            <div className="flex-1  rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+                                <strong>{comment.firstname}</strong> <span className="text-xs text-gray-400">{formatDateTime(comment.updatedAt)}</span>
+                                <p className="text-sm">
+                                    {
+                                        comment.message
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </section>
             <Footer />

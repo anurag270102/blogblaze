@@ -6,8 +6,7 @@ import Navbar from "../../Components/Navbar/Navbar"
 const allArticle=()=>{
     return(
         <>
-        <Navbar>
-        </Navbar>
+        <Navbar></Navbar>
         <Article></Article>
         <Footer></Footer>
         </>

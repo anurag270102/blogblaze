@@ -18,4 +18,14 @@ const UserModel = require('../../Models/User.model');
         return res.status(500).json({ message: 'Server Error' });
     }
 }
-module.exports={Createuser};
+
+const getUserNumber = async (req, res) => {
+    try {
+        const dbmail = (await UserModel.find({})).length;
+        return res.status(201).json({ number: dbmail });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: 'Server Error' });
+    }
+}
+module.exports={Createuser,getUserNumber};

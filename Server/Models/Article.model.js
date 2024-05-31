@@ -2,25 +2,17 @@ const mongoose=require('mongoose');
 
 const {Schema}=mongoose;
 
-const BlogSchema=new Schema({
+const ArticleSchema=new Schema({
     title:{
         type:String,
         require:true,
     },
-    aboutblog: {
-        type:String,
-        require:true,
-    },
-    coverpic: {
+    aboutarticle: {
         type:String,
         require:true,
     },
     categories: {
         type:Array,
-        require:true,
-    },
-    profilepic:{
-        type:String,
         require:true,
     },
     firstname:{
@@ -31,10 +23,8 @@ const BlogSchema=new Schema({
         type:String,
         require:true,
     },
-    
-
 },{
     timestamps:true,
 })
 
-module.exports=mongoose.model('Blog',BlogSchema);
+module.exports=mongoose.model('Article',ArticleSchema);

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import { Vortex } from 'react-loader-spinner';
 import { Errormessage } from "../Errormessage/Errormessage";
+import {  useNavigate } from "react-router-dom";
 
 const AddBlog = () => {
     const [errormessage, setErrormessage] = useState('');
@@ -17,6 +18,7 @@ const AddBlog = () => {
         coverpic: '',
         categories: []
     });
+    const naviate=useNavigate();
 
     useEffect(() => {
         const user = localStorage.getItem('currentuser');
@@ -82,7 +84,7 @@ const AddBlog = () => {
 
         try {
             const res = await axios.post('http://localhost:5000/addBlog', newForm);
-            console.log(res);
+            if(res.status===201) naviate('/blog');
             // Clear form and temporary state
             setForm({ title: '', aboutblog: '', coverpic: '', categories: [] });
             setTemp([]);

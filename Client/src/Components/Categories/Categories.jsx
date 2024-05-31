@@ -51,7 +51,7 @@ const Categories = () => {
                                         Stay stylish with our fashion blog, where we bring you the latest trends and timeless looks. From runway inspiration to everyday wear, find your unique style here.
                                     </p>
 
-                                    <Link to={'cat/fashion'} className="bg-[#FFB340]  hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md w-fit">
+                                    <Link to={'/blog?search=fashion'} className="bg-[#FFB340]  hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md w-fit">
                                         <div className="flex items-center justify-center">
                                         Explore
                                         <img src="src/assets/right-arrow-svgrepo-com.svg" alt="" width={'25px'} loading="lazy"/>
@@ -79,16 +79,13 @@ const Categories = () => {
                                     <p className="text-gray-500">
                                         Discover hidden gems and unforgettable adventures across the globe. Join us as we share travel tips, inspiring stories, and breathtaking destinations
                                     </p>
-                                    <Link to={'cat/travel'} className="bg-[#FFB340]  hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md w-fit">
+                                    <Link to={'/blog?search=travel'} className="bg-[#FFB340]  hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md w-fit">
                                         <div className="flex items-center justify-center">
                                         Explore
                                         <img loading="lazy" src="src/assets/right-arrow-svgrepo-com.svg" alt="" width={'25px'} />
                                         </div>
                                     </Link>
-
-
                                 </div>
-
                             </div>
 
                         </div>
@@ -108,18 +105,14 @@ const Categories = () => {
                                     <p className="text-gray-500 content-stretch justify-normal px-1">
                                         Indulge in culinary delights with our food blog, featuring delicious recipes and gourmet adventures. Discover flavors, cooking tips, and food stories from around the world.
                                     </p>
-                                    <Link to={'cat/food'} className="bg-[#FFB340]  hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md w-fit">
+                                    <Link to={'/blog?search=food'} className="bg-[#FFB340]  hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md w-fit">
                                         <div className="flex items-center justify-center">
                                         Explore
                                         <img loading="lazy" src="src/assets/right-arrow-svgrepo-com.svg" alt="" width={'25px'} />
                                         </div>
                                     </Link>
-
-
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
                     <div>
@@ -137,8 +130,7 @@ const Categories = () => {
                                     <p className="text-gray-500 content-stretch justify-normal px-1">
                                         Unlock the world of knowledge with our education blog offering insightful articles, study tips, and resources for lifelong learning. Empower your mind and expand your horizons with us.
                                     </p>
-
-                                    <Link to={'cat/eduction'} className="bg-[#FFB340]  hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md w-fit">
+                                    <Link to={'/blog?search=eduction'} className="bg-[#FFB340]  hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md w-fit">
                                         <div className="flex items-center justify-center">
                                         Explore
                                         <img loading="lazy" src="src/assets/right-arrow-svgrepo-com.svg" alt="" width={'25px'} />

@@ -23,7 +23,7 @@ const Aboutus = () => {
                         </ul>
                     </div>
                     <div className="mt-8 cursor-pointer">
-                        <Link to={'/'} className="bg-[#FFB340]  hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md cursor-pointer">Get
+                        <Link to={'/register'} className="bg-[#FFB340]  hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md cursor-pointer">Get
                             Started
                         </Link>
                     </div>
