@@ -102,9 +102,9 @@ const Allpost = () => {
                                         className="max-w-sm mx-auto rounded-md group hover:no-underline focus:no-underline dark:bg-gray-50 bg-[#031000] text-gray-400 hover:shadow-lg"
                                     >
                                         <img role="presentation" className="object-cover w-full rounded h-44 dark:bg-gray-500" src={post._doc.coverpic} alt="" />
-                                        <div className="p-6 space-y-2 ">
+                                        <div className="p-6 space-y-2">
                                             <div className='flex gap-5'>
-                                                <img src={post._doc.profilepic} className=' w-10 rounded-full'></img>
+                                                <img src={post._doc.profilepic} className='w-10 rounded-full' alt="" />
                                                 <div className='flex flex-col'>
                                                     <p className='font-semibold text-xl'>{post._doc.firstname}</p>
                                                     <span className="text-xs dark:text-gray-600">{formatDateTime(post.updatedAt)}</span>
@@ -112,10 +112,9 @@ const Allpost = () => {
                                             </div>
                                             <h3 className="text-2xl font-semibold group-hover:underline group-focus:underline text-[#FFB340]">{post._doc.title}</h3>
                                             <p className="text-gray-400">{truncateText(post._doc.aboutblog, 100)}</p>
-
+                                            
                                         </div>
                                     </Link>
-
                                 ))}
                             </div>
                             {visibleCount < posts.length && (

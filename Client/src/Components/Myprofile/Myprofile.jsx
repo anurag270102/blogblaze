@@ -9,7 +9,12 @@ const Myprofile = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [data, setData] = useState(null);
     const [userpost, setuserpost] = useState([]);
+    const [userarticel, setuserarticle] = useState([]);
     const [getComments, setGetComments] = useState([]);
+    const [deletemessage, setdeletemessage] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [visibleCount, setVisibleCount] = useState(3);
+
     const navigate = useNavigate();
     useEffect(() => {
         const user = localStorage.getItem('currentuser');
@@ -28,6 +33,17 @@ const Myprofile = () => {
             console.log(error);
         }
     }
+    const fetcharticleOfUser = async () => {
+        try {
+            setLoading(true);
+            const res = await axios.get(`http://localhost:5000/myarticle/${id}`)
+            setuserarticle(res.data.allarticle)
+            console.log(userarticel)
+            setLoading(false);
+        } catch (error) {
+            console.log(error);
+        }
+    }
     const fetchCommentOfUser = async () => {
         try {
             const res = await axios.get(`http://localhost:5000/mycomment/${id}`)
@@ -36,18 +52,38 @@ const Myprofile = () => {
             console.log(error);
         }
     }
+
+    const handleDelete = async (postId) => {
+        try {
+            const res = await axios.delete(`http://localhost:5000/deletepost/${postId}`)
+            if (res) setdeletemessage(res.data.message);
+        } catch (error) {
+            console.log(error);
+        }
+        setTimeout(() => {
+            setdeletemessage(null);
+        }, 3000);
+    };
     useEffect(() => {
         fetchblogOfUser();
         fetchCommentOfUser();
-    }, []);
+        fetcharticleOfUser();
+        // handleDelete();
+    }, [deletemessage]);
 
     // console.log(data);
     if (!data) {
         return <div>Loading...</div>; // Add a loading state
     }
+
+
     const formatDateTime = (dateTime) => {
         const date = parseISO(dateTime);
         return format(date, "do MMMM, h:mm ");
+    };
+
+    const loadMoreArticles = () => {
+        setVisibleCount(prevCount => prevCount + 3);
     };
 
     const truncateText = (text, maxLength) => {
@@ -123,25 +159,92 @@ const Myprofile = () => {
                 <div className='flex w-full justify-between px-52'>
                     <h1 className="text-3xl py-2 font-bold  items-center flex justify-start bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-sm ">Post</h1>
                     <button className="block  bg-[#FFB340] hover:bg-[#FFB340e5]  text-black rounded-lg px-6 py-3 font-semibold" onClick={() => navigate('/addblog')}>Add Blog</button>
-
                 </div>
                 <div className="container max-w-6xl p-6 mx-auto space-y-6 sm:space-y-12">
 
                     <div className="grid justify-center grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
+                        {
+                            deletemessage ? <div className='text-red-600 text-xl'>
+                                {deletemessage}
+                            </div> : null
+                        }
                         {
                             userpost.map((post) => {
-                                return <Link rel="noopener noreferrer" to={`/blog/${post._doc._id}`} className="max-w-sm mx-auto  rounded-md group hover:no-underline focus:no-underline dark:bg-gray-50 bg-[#031000] text-gray-400 hover:shadow-lg" key={post._doc_id}>
-                                    <img role="presentation" className="object-cover w-full rounded h-44 dark:bg-gray-500" src={post._doc.coverpic} loading='lazy' />
-                                    <div className="p-6 space-y-2">
-                                        <h3 className="text-2xl font-semibold group-hover:underline group-focus:underline text-[#FFB340]">{post._doc.title}</h3>
-                                        <span className="text-xs dark:text-gray-600">{formatDateTime(post.createdAt)}</span>
-                                        <p className="text-gray-400">{truncateText(post._doc.aboutblog,100)}</p>
+                                return (
+                                    <div key={post._doc._id} className="relative">
+                                        <Link
+                                            rel="noopener noreferrer"
+                                            to={`/blog/${post._doc._id}`}
+                                            className="max-w-sm mx-auto rounded-md group hover:no-underline focus:no-underline dark:bg-gray-50 bg-[#031000] text-gray-400 hover:shadow-lg"
+                                        >
+                                            <img
+                                                role="presentation"
+                                                className="object-cover w-full rounded h-44 dark:bg-gray-500"
+                                                src={post._doc.coverpic}
+                                                loading="lazy"
+                                            />
+                                            <div className="p-6 space-y-2">
+                                                <h3 className="text-2xl font-semibold group-hover:underline group-focus:underline text-[#FFB340]">
+                                                    {post._doc.title}
+                                                </h3>
+                                                <span className="text-xs dark:text-gray-600">
+                                                    {formatDateTime(post.createdAt)}
+                                                </span>
+                                                <p className="text-gray-400">
+                                                    {truncateText(post._doc.aboutblog, 100)}
+                                                </p>
+                                            </div>
+                                        </Link>
+                                        <button
+                                            onClick={() => handleDelete(post._doc._id)}
+                                            className="absolute top-0 right-0 m-2 p-2 bg-[#FFB340] text-white rounded-full hover:bg-[#ffb340be] focus:bg-[#f2b458]"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                                <path d="M9 3V4H4V6H5V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V6H20V4H15V3H9ZM7 6H17V19H7V6ZM9 8V17H11V8H9ZM13 8V17H15V8H13Z" />
+                                            </svg>
+
+                                        </button>
                                     </div>
-                                </Link>
+                                );
                             })
                         }
                     </div>
+                </div>
+                <div className='flex w-full justify-between px-52'>
+                    <h1 className="text-3xl py-2 font-bold  items-center flex justify-start bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-sm ">Article</h1>
+                    <button className="block  bg-[#FFB340] hover:bg-[#FFB340e5]  text-black rounded-lg px-6 py-3 font-semibold" onClick={() => navigate('/addarticle')}>Add Article</button>
+                </div>
+                <div className="container max-w-6xl p-6 mx-auto space-y-6 sm:space-y-12">
+
+                    
+                        
+                        
+                          {loading ? (
+                            <div className="text-center text-gray-400">Loading...</div>
+                        ) : (
+                            <>
+                                {
+                                userarticel.length>=1?userarticel.slice(0, visibleCount).map(article => (
+                                    <div key={article._doc.id} className="bg-[#031000] text-gray-300 p-10 rounded-md mb-10">
+                                        <h1 className="font-bold text-2xl mb-2">{article._doc.title}</h1>
+                                        <p className="my-7">{article._doc.content}</p>
+                                        <Link to={`/article/${article._doc._id}`} className="bg-[#FFB340] hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md">
+                                            Read More...
+                                        </Link>
+                                    </div>
+                                )):null}
+
+                                {visibleCount < userarticel.length && (
+                                    <div className="flex items-center justify-center">
+                                        <button onClick={loadMoreArticles} className="bg-[#FFB340] hover:bg-[#ffb340e7] text-black font-bold py-3 px-6 rounded-md">
+                                            Load More...
+                                        </button>
+                                    </div>
+                                )}
+                            </>
+                        )} 
+                        
+                    
                 </div>
                 <h1 className="text-3xl py-2 pl-52 font-bold  items-center flex justify-start bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-sm ">My Comments</h1>
                 <div className='flex justify-cetnter items-center  gap-10 my-10 flex-wrap px-52 ' >
