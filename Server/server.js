@@ -6,9 +6,9 @@ const app = express();
 const {Createuser,getUserNumber}=require('./Controllers/Register/CreateUser')
 const {Loginuser}=require('./Controllers/Login/Login');
 const {Contactuser}=require('./Controllers/Contact/Contact');
-const { Blog,GetBlog,GetUserBlog,BlogByBlogID } = require('./Controllers/Blog/Blog');
+const { Blog,GetBlog,GetUserBlog,BlogByBlogID,deleteBlog } = require('./Controllers/Blog/Blog');
 const {createCommnet,getCommnet,getCommnetByUser,getCommnetNumber}=require('./Controllers/Comment/Comment');
-const {CreateArticle,GetAllArticle,GetArticleById}=require('./Controllers/Article/Article');
+const {CreateArticle,GetAllArticle,GetArticleById,GetUserArticle}=require('./Controllers/Article/Article');
 app.use(cors());
 app.use(express.json());
 dotenv.config();
@@ -36,6 +36,8 @@ app.get('/mycomment/:id',getCommnetByUser);
 app.post('/addarticle',CreateArticle);
 app.get('/article',GetAllArticle);
 app.get('/article/:articleId',GetArticleById);
+app.get('/myarticle/:id',GetUserArticle)
+app.delete('/deletepost/:postId',deleteBlog)
 app.listen(5000, () => {
     connect();
     console.log('backend running');

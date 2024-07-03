@@ -31,7 +31,10 @@ const BlogSchema=new Schema({
         type:String,
         require:true,
     },
-    
+    likes:{
+        type:Number,
+        require:false,
+    }
 
 },{
     timestamps:true,

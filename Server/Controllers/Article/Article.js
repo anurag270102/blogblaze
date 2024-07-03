@@ -59,4 +59,23 @@ const GetArticleById = async (req, res) => {
         console.log(error);
     }
 }
-module.exports = { CreateArticle, GetAllArticle, GetArticleById };
+
+//article by userID
+const GetUserArticle = async (req, res) => {
+    console.log(req.params.id);
+    try {
+      const allarticle = await ArticleSchema.find({
+        userid: req.params.id
+      }).sort({ createdAt: -1 });
+      const formattedarticle = allarticle.map(article => ({
+        ...article,
+        createdAt: article.createdAt.toISOString().split('T')[0],
+        updatedAt: article.updatedAt.toISOString().replace('T', ' ').split('.')[0]
+      }));
+      res.status(201).json({ allarticle: formattedarticle });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server error');
+    }
+  }
+module.exports = { CreateArticle, GetAllArticle, GetArticleById,GetUserArticle };

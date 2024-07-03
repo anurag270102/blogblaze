@@ -79,4 +79,17 @@ const BlogByBlogID = async (req, res) => {
     res.status(500).send('Server error');
   }
 }
-module.exports = { Blog, GetBlog, GetUserBlog, BlogByBlogID };
+
+//delete blog
+const deleteBlog=async(req,res)=>{
+  try {
+    const Blog = await BlogSchema.findByIdAndDelete({
+      _id: req.params.postId
+    })
+    res.status(201).json({ message:'successfully deleted' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+}
+module.exports = { Blog, GetBlog, GetUserBlog, BlogByBlogID,deleteBlog };
