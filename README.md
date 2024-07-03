@@ -85,6 +85,6 @@ Contributions are welcome! Please fork this repository and submit a pull request
 
 For any inquiries or feedback, feel free to reach out via the Contact Us page on BlogBlaze or directly through GitHub.
 
----
+
 
 Thank you for checking out BlogBlaze!
