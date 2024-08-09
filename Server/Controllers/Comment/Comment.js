@@ -12,7 +12,7 @@ const createCommnet = async (req, res) => {
 //get Comments by Blog
 const getCommnet = async (req, res) => {
 
-    console.log(req.params.blogId);
+    //console.log(req.params.blogId);
     try {
         const data = await CommentSchema.find({
             blogid: req.params.blogId
@@ -36,7 +36,7 @@ const getCommnetNumber = async (req, res) => {
 
 //get Comments by User
 const getCommnetByUser = async (req, res) => {
-    console.log(req.params.id);
+   // console.log(req.params.id);
     try {
         const data = await CommentSchema.find({
             userid: req.params.id

@@ -62,7 +62,7 @@ const GetArticleById = async (req, res) => {
 
 //article by userID
 const GetUserArticle = async (req, res) => {
-    console.log(req.params.id);
+    
     try {
       const allarticle = await ArticleSchema.find({
         userid: req.params.id
