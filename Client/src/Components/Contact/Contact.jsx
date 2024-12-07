@@ -1,32 +1,31 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 const ContactUs = () => {
   const [form, setform] = useState({
-    name: '',
-    email: '',
-    message: ''
+    name: "",
+    email: "",
+    message: "",
   });
   const [Success, setsuccess] = useState(false);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const handleChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
     setform({
       ...form,
       [name]: value,
-    })
-  }
+    });
+  };
   const handleSubmit = async () => {
     try {
-      const res = await axios.post('http://localhost:5000/contact', form);
+      const res = await axios.post("http://localhost:5000/contact", form);
       if (res.status === 201) setsuccess(true);
-      navigate('/');
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
-
-  }
+  };
   return (
     <section className="body-font  bg-[#031000] text-gray-400">
       <div className="container mx-auto px-5 py-12">
@@ -35,7 +34,8 @@ const ContactUs = () => {
             Contact Us
           </h1>
           <p className="mx-auto text-base leading-relaxed lg:w-2/3">
-            Feel free to reach out to us! Whether you have a question, feedback, or a collaboration proposal, we would love to hear from you.
+            Feel free to reach out to us! Whether you have a question, feedback,
+            or a collaboration proposal, we would love to hear from you.
           </p>
         </div>
         <div className="mx-auto md:w-2/3 lg:w-1/2">
@@ -93,25 +93,41 @@ const ContactUs = () => {
                 </label>
               </div>
             </div>
-            {
-              Success &&
-                <div className="flex w-48 shadow-lg rounded-lg">
-                  <div className="bg-green-300 py-3 px-6 rounded-l-lg flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="text-[#FFB340] fill-current" viewBox="0 0 16 16" width="20" height="20">
-                      <path fillRule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path>
-                    </svg>
-                  </div>
-                  <div className="px-4 py-3 bg-green-200 text-[#FFB340] rounded-r-lg flex justify-between items-center w-full border border-l-transparent ">
-                    <div>Success</div>
-                    <button  >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="fill-current text-gray-700" viewBox="0 0 16 16" width="20" height="20">
-                        <path fillRule="evenodd" d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z">
-                        </path>
-                      </svg>
-                    </button>
-                  </div>
+            {Success && (
+              <div className="flex w-48 shadow-lg rounded-lg">
+                <div className="bg-green-300 py-3 px-6 rounded-l-lg flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="text-[#FFB340] fill-current"
+                    viewBox="0 0 16 16"
+                    width="20"
+                    height="20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"
+                    ></path>
+                  </svg>
                 </div>
-            }
+                <div className="px-4 py-3 bg-green-200 text-[#FFB340] rounded-r-lg flex justify-between items-center w-full border border-l-transparent ">
+                  <div>Success</div>
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="fill-current text-gray-700"
+                      viewBox="0 0 16 16"
+                      width="20"
+                      height="20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            )}
             <div className="w-full p-2">
               <Link>
                 <button
